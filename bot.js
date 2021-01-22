@@ -22,16 +22,19 @@ let html = '';
 let rawArguments=process.argv.slice(2);
 let arguments = minimist(rawArguments, {
   default: {
-          buy: false,
-          debug: false
+      login: 'myname@gmail.com',
+      password: 'mypassword',
+      cvv: '123',
+      buy: false,
+      debug: false
   }
 });
 // user/pass: the email/username for your Nike.com account
-const user = 'myname@gmail.com';
-const pass = 'mypassword';
+const user = arguments.login;
+const pass = arguments.password;
 
 // cv_code: 3-digit credit card validation code for the card saved to your Nike.com account
-const cv_code = '123';
+const cv_code = arguments.cvv;
 
 // size: the shoe size, as you see in the table of sizes on a product page, e.g., 'M 9 / W 10.5'
 const size = arguments.size;
