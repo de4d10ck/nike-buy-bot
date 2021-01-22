@@ -17,9 +17,18 @@ const SimpleNodeLogger = require('simple-node-logger'),
 let html = '';
 
 
-// Parameters to set
-
 let rawArguments=process.argv.slice(2);
+// Parameters to set
+// user/pass: the email/username for your Nike.com account
+// cv_code: 3-digit credit card validation code for the card saved to your Nike.com account
+// size: the shoe size, as you see in the table of sizes on a product page, e.g., 'M 9 / W 10.5'
+// url: url to the shoe page, e.g., 'https://www.nike.com/us/launch/t/kobe-4-protro-wizenard/'
+
+// debug: Use debug/logging features?
+// Includes writing updates to log file, writing html snapshots, and taking screenshots
+
+// buy: ****WARNING**** if you set this to true it *may* actually make a purchase
+// you can leave this to false and the bot will not "submit order"
 let arguments = minimist(rawArguments, {
   default: {
       login: 'myname@gmail.com',
@@ -29,25 +38,17 @@ let arguments = minimist(rawArguments, {
       debug: false
   }
 });
-// user/pass: the email/username for your Nike.com account
 const user = arguments.login;
 const pass = arguments.password;
 
-// cv_code: 3-digit credit card validation code for the card saved to your Nike.com account
 const cv_code = arguments.cvv;
 
-// size: the shoe size, as you see in the table of sizes on a product page, e.g., 'M 9 / W 10.5'
 const size = arguments.size;
 
-// url: url to the shoe page, e.g., 'https://www.nike.com/us/launch/t/kobe-4-protro-wizenard/'
 const url = arguments.url;
 
-// debug: Use debug/logging features?
-// Includes writing updates to log file, writing html snapshots, and taking screenshots
 const debug = arguments.debug;
 
-// buy: ****WARNING**** if you set this to true it *may* actually make a purchase
-// you can leave this to false and the bot will not "submit order"
 const buy = arguments.buy;
 
 // main flow
