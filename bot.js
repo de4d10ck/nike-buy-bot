@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer-extra');
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
 const fs = require('fs');
 const {installMouseHelper} = require('./extras/install_mouse_helper');
+const minimist = require('minimist');
+
 puppeteer.use(pluginStealth())
 
 // Debugging stuff
@@ -15,10 +17,15 @@ const SimpleNodeLogger = require('simple-node-logger'),
 let html = '';
 
 
-// ####################################
-// ####################################
 // Parameters to set
 
+let rawArguments=process.argv.slice(2);
+let arguments = minimist(rawArguments, {
+  default: {
+          buy: false,
+          debug: false
+  }
+});
 // user/pass: the email/username for your Nike.com account
 const user = 'myname@gmail.com';
 const pass = 'mypassword';
@@ -27,25 +34,19 @@ const pass = 'mypassword';
 const cv_code = '123';
 
 // size: the shoe size, as you see in the table of sizes on a product page, e.g., 'M 9 / W 10.5'
-const size = 'M 9 / W 10.5';
+const size = arguments.size;
 
 // url: url to the shoe page, e.g., 'https://www.nike.com/us/launch/t/kobe-4-protro-wizenard/'
-const url = 'https://www.nike.com/us/launch/t/kobe-4-protro-wizenard/';
+const url = arguments.url;
 
 // debug: Use debug/logging features?
 // Includes writing updates to log file, writing html snapshots, and taking screenshots
-const debug = true;
+const debug = arguments.debug;
 
 // buy: ****WARNING**** if you set this to true it *may* actually make a purchase
 // you can leave this to false and the bot will not "submit order"
-const buy = false;
+const buy = arguments.buy;
 
-
-
-
-
-// ####################################
-// ####################################
 // main flow
 (async () => { 
 
@@ -80,10 +81,7 @@ const buy = false;
 	await page.goto(url);
 	page.waitForNavigation({ waitUntil: 'networkidle0' }); // Wait for page to finish loading
 	
-	
-	
-	// ##################################################
-	// ##################################################
+
 	// ################################## ROUND 1
 	// BEGIN
 	
@@ -100,9 +98,6 @@ const buy = false;
 	
 	
 	
-	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 2	
 	// Wait for size selector to appear, then scroll to it
 	
@@ -123,10 +118,6 @@ const buy = false;
 	await page.waitFor(500);
 	
 	
-	
-	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 3
 	// Pick my size from the options
 	
@@ -150,11 +141,6 @@ const buy = false;
 	
 	await page.waitFor(500);
 	
-	
-	
-	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 4	
 	// Wait for add to cart button, then scroll into view
 	
@@ -174,11 +160,6 @@ const buy = false;
 	
 	await page.waitFor(500);
 	
-	
-	
-	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 5	
 	// Click the add to cart button
 	
@@ -198,11 +179,7 @@ const buy = false;
 	
 	await page.waitFor(500);	
 	
-	
-	
-	
-	// ##################################################
-	// ##################################################
+
 	// ################################## ROUND 6
 	// Login
 	
@@ -273,8 +250,6 @@ const buy = false;
 	
 	
 	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 8
 	// Click "Save & Continue"
 	
@@ -295,11 +270,6 @@ const buy = false;
 	await page.waitFor(500);		
 	
 	
-	
-	
-	
-	// ##################################################
-	// ##################################################
 	// ################################## ROUND 9
 	// Click "Submit Order"
 	
@@ -318,9 +288,6 @@ const buy = false;
 		await page.waitFor(500);
 		
 	}
-	
-	
-	
 	
 	//await browser.close();
 })();
