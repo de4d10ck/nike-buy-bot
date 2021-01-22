@@ -33,6 +33,7 @@ let arguments = minimist(rawArguments, {
   default: {
       login: 'myname@gmail.com',
       password: 'mypassword',
+      url: 'https://www.nike.com/us/launch/t/kobe-4-protro-wizenard/',
       cvv: '123',
       buy: false,
       debug: false
